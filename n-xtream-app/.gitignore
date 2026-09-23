@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# React Native
+android/app/build/
+android/.gradle/
+ios/Pods/
+ios/build/
+*.keystore
+!debug.keystore
+
+# Ambiente
+.env
+
+# Editor / SO
+.vscode/
+.DS_Store

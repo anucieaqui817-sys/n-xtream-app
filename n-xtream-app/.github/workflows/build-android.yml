@@ -1,0 +1,39 @@
+name: Build Android APK
+
+# Compila o app automaticamente toda vez que você enviar código pro
+# GitHub — roda 100% na nuvem, então funciona mesmo sem computador.
+# O APK pronto fica disponível pra baixar na aba "Actions" do repositório.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # também permite rodar manualmente pelo botão no GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Compilar APK (debug)
+        run: cd android && ./gradlew assembleDebug
+
+      - name: Disponibilizar APK pra download
+        uses: actions/upload-artifact@v4
+        with:
+          name: n-xtream-app-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
